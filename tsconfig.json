@@ -1,7 +1,8 @@
 {
 	"compilerOptions": {
 		"experimentalDecorators": true,
-		"lib": ["es2020"],
+		"lib": ["es2020", "dom"],
+		"types":["node"],
 		"moduleResolution": "node",
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
