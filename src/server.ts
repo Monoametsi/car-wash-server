@@ -18,11 +18,8 @@ app.post('/payment-result', (req:Request, res:Response) => {
 
         return reqBodyArr.join('&');
     }
-    console.log('wip')
+    
     return res.status(301).redirect(`http://localhost:3000/payment-confirmation?${convertBodyToQueryString()}`)
-    // res.status(200).json({
-    //     message: `http://localhost:3000/payment-confirmation/?${convertBodyToQueryString()}`
-    // })
 })
 
 app.listen(PORT, () => {
