@@ -1,5 +1,7 @@
 import express, {Request, Response, Application} from 'express';
 import bodyParser from 'body-parser';
+import { upDateData } from './firebase-config';
+import { updateData } from './types/types';
 
 const PORT:number = 4000; 
 const app: Application = express();
@@ -8,18 +10,29 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post('/payment-result', (req:Request, res:Response) => {
-    const convertBodyToQueryString = () => {
-        const reqBodyArr: string[] = [];
+app.get('/', (req:Request, res:Response) => {
+    console.log(req.body)
+    return res.status(200).json({
+        message: 'works'
+    })
+})
 
-        for(let x in req.body){
-            reqBodyArr.push(`${x}=${req.body[x]}`);
+app.post('/payment-result/:orderId', async (req:Request, res:Response) => {
+    try{
+        let { orderId } = req.params;
+        const { TRANSACTION_STATUS } = req.body;
+        const payload: updateData = {
+            orderId,
+            paymentStatus: TRANSACTION_STATUS
         }
 
-        return reqBodyArr.join('&');
+        await upDateData("orders", payload);
+        
+        return res.status(301).redirect(`http://localhost:3000/payment-confirmation?TRANSACTION_STATUS=${TRANSACTION_STATUS}`)
+    }catch (e:any) {
+        console.log(e)
     }
     
-    return res.status(301).redirect(`http://localhost:3000/payment-confirmation?${convertBodyToQueryString()}`)
 })
 
 app.listen(PORT, () => {
