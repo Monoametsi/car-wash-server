@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, updateDoc } from 'firebase/firestore';
 import { updateData } from 'types/types';
 
 export const firebaseConfig = {
@@ -21,16 +21,9 @@ export const getSingleDocData = (collectionName:string, dataId:string) => {
     const docRef = doc(fireBaseDb, collectionName, dataId)
     return docRef;
 }
-export const getCollectionData = async (collectionName:string) => {
-    const getData = await getDocs(getCollection(collectionName));
-    return getData;
-}
 export const upDateData = async (collectionName:string, payload: updateData) => {
     const { orderId, paymentStatus } = payload
-    const updateDataFbRequest = await updateDoc(getSingleDocData(collectionName, orderId), {
+    return await updateDoc(getSingleDocData(collectionName, orderId), {
         paymentStatus
     });
-
-    console.log(updateDataFbRequest)
-    return updateDataFbRequest;
 }
