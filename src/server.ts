@@ -19,6 +19,7 @@ app.get('/', (req:Request, res:Response) => {
 
 app.post('/payment-result/:orderId', async (req:Request, res:Response) => {
     try{
+        const baseUrl = process.env.FRONTEND_DOMAIN;
         let { orderId } = req.params;
         const { TRANSACTION_STATUS } = req.body;
         const payload: updateData = {
@@ -28,7 +29,7 @@ app.post('/payment-result/:orderId', async (req:Request, res:Response) => {
 
         await upDateData("orders", payload);
         
-        return res.status(301).redirect(`http://localhost:3000/payment-confirmation?TRANSACTION_STATUS=${TRANSACTION_STATUS}`)
+        return res.status(301).redirect(`${baseUrl}/payment-confirmation?TRANSACTION_STATUS=${TRANSACTION_STATUS}`)
     }catch (e:any) {
         console.log(e)
     }
