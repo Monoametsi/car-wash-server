@@ -2,7 +2,7 @@
   "name": "car-wash-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon dist/server.js",
     "dev": "nodemon src/server.ts",
