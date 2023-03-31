@@ -28,6 +28,7 @@ app.post('/payment-result/:orderId', async (req:Request, res:Response) => {
         }
 
         await upDateData("orders", payload);
+        console.log('domain ---->', baseUrl)
         
         return res.status(301).redirect(`${baseUrl}/payment-confirmation?TRANSACTION_STATUS=${TRANSACTION_STATUS}`)
     }catch (e:any) {
